@@ -35,6 +35,12 @@
         }
         .gold-border { border: 2px solid #c09a3e; box-shadow: 0 0 15px rgba(192, 154, 62, 0.3); }
         .gold-glow { text-shadow: 0 0 10px rgba(192, 154, 62, 0.6); }
+        @media print {
+            body * { visibility: hidden; }
+            #certificate-modal, #certificate-modal * { visibility: visible; }
+            #certificate-modal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body class="military-grid min-h-screen flex flex-col justify-between selection:bg-egyptRed selection:text-white">
@@ -82,7 +88,7 @@
 
             <!-- Official Logo -->
             <div class="flex justify-center mb-4">
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" alt="شعار التوجيه العام" class="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-egyptGold shadow-xl object-cover bg-white" id="official-logo">
+                <img src="logo.jpg" alt="شعار التوجيه العام" class="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-egyptGold shadow-xl object-cover bg-white" onerror="this.src='https://via.placeholder.com/120?text=Logo'">
             </div>
 
             <!-- Official Directorate Info -->
@@ -145,22 +151,13 @@
 
     <!-- JavaScript Control -->
     <script>
-        // ربط الشعار مباشرة بصورتك الأصلية لضمان ظهورها بدون روابط خارجية
-        document.getElementById('official-logo').src = "URL_PLACEHOLDER".replace("URL_PLACEHOLDER", URL.createObjectURL(new Blob([], {type: 'image/jpeg'}))) || "https://i.ibb.co/6R22h32/logo.jpg";
-        
-        // استخدام رابط بديل ومباشر للصورة التي أرسلتها لضمان عدم اختفائها نهائياً
-        const logoImg = document.getElementById('official-logo');
-        logoImg.src = "https://i.ibb.co/6R22h32/logo.jpg";
-        // إذا حدث أي خطأ يتم استخدام الشعار الاحتياطي المضمون
-        logoImg.onerror = function() {
-            this.src = "https://via.placeholder.com/150/c09a3e/111111?text=Tanta+Edu";
-        };
-
         function startApp() {
+            // إخفاء صفحة البيانات والغطاء وعرض شاشة المسابقة
             document.getElementById('screen-cover').classList.add('hidden');
             document.getElementById('screen-game').classList.remove('hidden');
             document.getElementById('header-stats').classList.remove('hidden');
             
+            // تأثير تفاعلي بالقصاصات الملونة
             confetti({
                 particleCount: 100,
                 spread: 70,
@@ -178,4 +175,4 @@
         }
     </script>
 </body>
-    </html>
+                                                                                    </html>

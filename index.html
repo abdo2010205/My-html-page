@@ -6,11 +6,11 @@
     <title>أبطال النصر: رحلة استعادة السيادة - 6 أكتوبر 1973</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Arabic (Cairo & Tajawal) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Military & Game Icons -->
+    <!-- Google Fonts Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Canvas Confetti for victory -->
+    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
@@ -21,110 +21,67 @@
                         egyptRed: '#ce1126',
                         egyptGold: '#c09a3e',
                         egyptBlack: '#111111',
-                        sandBg: '#0f172a',
-                        militaryGreen: '#1e3a1e'
-                    },
-                    fontFamily: {
-                        cairo: ['Cairo', 'sans-serif'],
-                        tajawal: ['Tajawal', 'sans-serif']
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #0b0f19;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-
-        /* Custom Military Grid Animation Background */
+        body { font-family: 'Cairo', sans-serif; background-color: #0b0f19; color: #f3f4f6; overflow-x: hidden; }
         .military-grid {
             background-image: linear-gradient(to right, rgba(192, 154, 62, 0.05) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(192, 154, 62, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-
-        /* Gold Gradient Borders */
-        .gold-border {
-            border: 2px solid #c09a3e;
-            box-shadow: 0 0 15px rgba(192, 154, 62, 0.3);
-        }
-
-        .gold-glow {
-            text-shadow: 0 0 10px rgba(192, 154, 62, 0.6);
-        }
-
-        .red-glow {
-            text-shadow: 0 0 10px rgba(206, 17, 38, 0.8);
-        }
-
-        /* Certificate Print Styling */
+        .gold-border { border: 2px solid #c09a3e; box-shadow: 0 0 15px rgba(192, 154, 62, 0.3); }
+        .gold-glow { text-shadow: 0 0 10px rgba(192, 154, 62, 0.6); }
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #certificate-modal, #certificate-modal * {
-                visibility: visible;
-            }
-            #certificate-modal {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background: white !important;
-                color: black !important;
-            }
-            .no-print {
-                display: none !important;
-            }
+            body * { visibility: hidden; }
+            #certificate-modal, #certificate-modal * { visibility: visible; }
+            #certificate-modal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: white !important; color: black !important; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
 <body class="military-grid min-h-screen flex flex-col justify-between selection:bg-egyptRed selection:text-white">
 
-    <!-- Top Header Navigation / Dashboard -->
+    <!-- Top Header Navigation -->
     <header class="w-full bg-slate-900/90 border-b-2 border-egyptGold/40 backdrop-blur-md p-4 sticky top-0 z-40">
         <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3 space-x-reverse">
                 <div class="w-10 h-10 rounded-full bg-egyptRed flex items-center justify-center font-bold text-white shadow-lg border border-egyptGold">
-                    <i class="fa-solid font-bold">1973</i>
+                    1973
                 </div>
                 <div>
                     <h1 class="text-xl md:text-2xl font-black text-egyptGold tracking-wide">أبطال النصر</h1>
-                    <p class="text-xs text-gray-400">رحلة استعادة السيادة - مسابقة 6 أكتوبر الرقمية</p>
+                    <p class="text-xs text-gray-400">مسابقة 6 أكتوبر بعيون رقمية</p>
                 </div>
             </div>
 
-            <!-- Player Status Dashboard (Visible during play) -->
-            <div id="header-stats" class="hidden flex items-center gap-6 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
+            <!-- Header Stats -->
+            <div id="header-stats" class="hidden flex items-center gap-4 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid font-bold text-egyptGold fa-user-shield"></i>
-                    <span id="player-display-name" class="font-bold text-slate-200">البطل</span>
+                    <i class="fa-solid fa-user-shield text-egyptGold"></i>
+                    <span id="player-display-name" class="font-bold text-slate-200 text-sm">البطل</span>
                 </div>
                 <div class="h-6 w-px bg-slate-700"></div>
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-star text-yellow-400 animate-pulse"></i>
-                    <span class="text-xs text-gray-400">النقاط:</span>
-                    <span id="score-display" class="font-black text-lg text-egyptGold">0</span>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <span id="score-display" class="font-black text-egyptGold">0</span>
                 </div>
                 <div class="h-6 w-px bg-slate-700"></div>
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-flag-checkered text-egyptRed"></i>
-                    <span class="text-xs text-gray-400">المرحلة:</span>
-                    <span id="stage-display" class="font-bold text-slate-200">1 / 3</span>
+                    <span id="stage-display" class="font-bold text-slate-200 text-sm">1 / 3</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Dynamic View Container -->
+    <!-- Main Container -->
     <main class="max-w-4xl w-full mx-auto p-4 md:p-6 flex-grow flex items-center justify-center">
 
-        <!-- SCREEN 0: OFFICIAL COVER & DATA PAGE -->
+        <!-- SCREEN 0: OFFICIAL COVER & REGISTRATION PAGE -->
         <div id="screen-cover" class="w-full bg-slate-900/95 gold-border rounded-2xl p-6 md:p-8 text-center relative shadow-2xl">
             <div class="absolute -top-12 -left-12 w-32 h-32 bg-egyptRed/20 rounded-full blur-2xl"></div>
             <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-egyptGold/20 rounded-full blur-2xl"></div>
@@ -135,112 +92,212 @@
             </div>
 
             <!-- Official Directorate Info -->
-            <div class="mb-6 space-y-1">
+            <div class="mb-4 space-y-1">
                 <p class="text-xs md:text-sm font-bold text-egyptGold">محافظة الغربية - وزارة التربية والتعليم والتعليم الفني</p>
                 <h3 class="text-lg md:text-xl font-black text-white">مديرية التربية والتعليم بالغربية</h3>
                 <p class="text-xs md:text-sm text-gray-300">التوجيه العام لمادة الكمبيوتر وتكنولوجيا المعلومات - وحدة البرمجة والذكاء الاصطناعي</p>
             </div>
 
-            <hr class="border-slate-700 my-4">
+            <hr class="border-slate-700 my-3">
 
-            <h2 class="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-egyptRed via-yellow-400 to-egyptGold mb-2 gold-glow">
+            <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-egyptRed via-yellow-400 to-egyptGold mb-2 gold-glow">
                 مسابقة 6 أكتوبر بعيون رقمية
             </h2>
-            <p class="text-sm md:text-base text-egyptGold font-bold mb-6">(البرمجة والذكاء الاصطناعي)</p>
+            <p class="text-xs md:text-sm text-egyptGold font-bold mb-4">(البرمجة والذكاء الاصطناعي)</p>
 
-            <!-- Student & School Credentials Box (Page Section) -->
-            <div class="bg-slate-800/90 border-2 border-egyptGold/60 p-5 rounded-xl max-w-lg mx-auto mb-8 shadow-inner text-right space-y-3">
-                <div class="border-b border-slate-700 pb-2 flex justify-between items-center">
-                    <span class="text-gray-400 text-sm">اسم الطالب:</span>
-                    <span class="text-white font-bold text-sm md:text-base">عبدالرحمن صابر فاروق ابراهيم</span>
+            <!-- Student & School Credentials Box -->
+            <div class="bg-slate-800/90 border-2 border-egyptGold/60 p-4 rounded-xl max-w-lg mx-auto mb-6 shadow-inner text-right space-y-2 text-sm">
+                <div class="border-b border-slate-700 pb-1.5 flex justify-between items-center">
+                    <span class="text-gray-400">اسم الطالب:</span>
+                    <span class="text-white font-bold">عبدالرحمن صابر فاروق ابراهيم</span>
                 </div>
-                <div class="border-b border-slate-700 pb-2 flex justify-between items-center">
-                    <span class="text-gray-400 text-sm">المدرسة:</span>
-                    <span class="text-white font-bold text-sm md:text-base">الاقباط الثانوية بنين بطنطا</span>
+                <div class="border-b border-slate-700 pb-1.5 flex justify-between items-center">
+                    <span class="text-gray-400">المدرسة:</span>
+                    <span class="text-white font-bold">الاقباط الثانوية بنين بطنطا</span>
                 </div>
-                <div class="border-b border-slate-700 pb-2 flex justify-between items-center">
-                    <span class="text-gray-400 text-sm">المديرية والجهة:</span>
-                    <span class="text-egyptGold font-bold text-xs md:text-sm">مديرية التربية والتعليم بالغربية (التوجيه العام - وحدة البرمجة والذكاء الاصطناعي)</span>
+                <div class="pb-1 flex justify-between items-center">
+                    <span class="text-gray-400">المديرية والجهة:</span>
+                    <span class="text-egyptGold font-bold text-xs">مديرية التربية والتعليم بالغربية (التوجيه العام - وحدة البرمجة والذكاء الاصطناعي)</span>
                 </div>
             </div>
 
-            <!-- Start Button to Screen 1 -->
-            <button onclick="goToWelcome()" class="w-full max-w-md bg-gradient-to-r from-egyptRed to-rose-700 hover:from-red-700 hover:to-rose-800 text-white font-black text-lg py-4 rounded-xl shadow-lg border-2 border-egyptGold transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 mx-auto">
-                <i class="fa-solid fa-rocket text-yellow-300"></i>
-                <span>بدء الرحلة التفاعلية للمسابقة</span>
-            </button>
-        </div>
-
-        <!-- SCREEN 1: PLAYER WELCOME & REGISTRATION (Initially Hidden) -->
-        <div id="screen-welcome" class="hidden w-full bg-slate-900/95 gold-border rounded-2xl p-6 md:p-10 text-center relative overflow-hidden shadow-2xl">
-            <div class="absolute -top-12 -left-12 w-32 h-32 bg-egyptRed/20 rounded-full blur-2xl"></div>
-            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-egyptGold/20 rounded-full blur-2xl"></div>
-
-            <div class="mb-6 inline-block p-4 rounded-full bg-slate-800/80 border border-egyptGold/50">
-                <i class="fa-solid fa-jet-fighter text-4xl text-egyptGold animate-bounce"></i>
-            </div>
-
-            <h2 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-egyptRed via-yellow-400 to-egyptGold mb-4 gold-glow">
-                مسابقة أبطال النصر الرقمية
-            </h2>
-            <p class="text-gray-300 max-w-xl mx-auto text-base md:text-lg mb-8 leading-relaxed">
-                مرحباً بك يا قائد المستقبل! أنت الآن على وشك خوض تجربة تكتيكية تفاعلية تعيد فيها تخطيط وتنفيذ ملحمة 6 أكتوبر 1973. اتخذ قراراتك الحكيمة واثبت مهارتك لتتوج بلقب <strong>"البطل الرقمي"</strong>.
-            </p>
-
-            <form id="start-form" onsubmit="startGame(event)" class="max-w-md mx-auto space-y-4">
-                <div class="text-right">
-                    <label for="player-name" class="block text-sm font-bold text-egyptGold mb-2">اسم الطالب / المقاتل الرقمي:</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-user absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" id="player-name" required placeholder="أدخل اسمك الثلاثي هنا..." 
-                               class="w-full bg-slate-800 text-white border-2 border-slate-700 focus:border-egyptGold rounded-xl py-3 pr-11 pl-4 outline-none transition duration-200">
-                    </div>
+            <!-- Player Registration Form Before Starting -->
+            <form id="start-form" onsubmit="startGame(event)" class="max-w-md mx-auto space-y-3 text-right">
+                <div>
+                    <label for="player-name" class="block text-xs font-bold text-egyptGold mb-1">اسم الطالب المتسابق:</label>
+                    <input type="text" id="player-name" required placeholder="أدخل اسمك هنا..." 
+                           class="w-full bg-slate-800 text-white border border-slate-700 focus:border-egyptGold rounded-xl py-2.5 px-3 outline-none text-sm">
                 </div>
 
-                <div class="text-right">
-                    <label for="school-grade" class="block text-sm font-bold text-egyptGold mb-2">المرحلة الدراسية:</label>
-                    <select id="school-grade" class="w-full bg-slate-800 text-white border-2 border-slate-700 focus:border-egyptGold rounded-xl py-3 px-4 outline-none">
+                <div>
+                    <label for="school-grade" class="block text-xs font-bold text-egyptGold mb-1">المرحلة الدراسية:</label>
+                    <select id="school-grade" class="w-full bg-slate-800 text-white border border-slate-700 focus:border-egyptGold rounded-xl py-2.5 px-3 outline-none text-sm">
                         <option value="الثانوي العام">المرحلة الثانوية العامة</option>
                         <option value="المرحلة الإعدادية">المرحلة الإعدادية</option>
                         <option value="المرحلة الابتدائية">المرحلة الابتدائية</option>
                     </select>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-egyptRed to-red-700 hover:from-red-700 hover:to-egyptRed text-white font-black text-xl py-4 rounded-xl shadow-lg border border-yellow-500/30 transform hover:-translate-y-1 transition duration-200 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-play"></i>
-                    بدء المهمة التكتيكية
+                <button type="submit" class="w-full bg-gradient-to-r from-egyptRed to-rose-700 hover:from-red-700 hover:to-rose-800 text-white font-black text-base py-3 rounded-xl shadow-lg border border-egyptGold transform hover:scale-105 transition duration-200 flex items-center justify-center gap-2 mt-2">
+                    <i class="fa-solid fa-rocket text-yellow-300"></i>
+                    <span>بدء اللعبة والتحدي</span>
                 </button>
             </form>
         </div>
 
-        <!-- SCREEN 2: GAMEPLAY STAGES -->
-        <div id="screen-gameplay" class="hidden w-full bg-slate-900/95 gold-border rounded-2xl p-6 md:p-8 relative shadow-2xl">
+        <!-- SCREEN 1: GAMEPLAY STAGES (4 Options) -->
+        <div id="screen-game" class="hidden w-full bg-slate-900/95 gold-border rounded-2xl p-6 md:p-8 shadow-2xl text-right">
+            <h3 id="stage-title" class="text-xl md:text-2xl font-black text-egyptGold mb-2">المرحلة الأولى: بطولات حرب أكتوبر</h3>
+            <p id="stage-desc" class="text-gray-300 text-sm mb-6">أجب عن السؤال التالي لاجتياز العبور الرقمي بنجاح!</p>
             
-            <!-- Stage Header Info -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4 mb-6 gap-3">
-                <div>
-                    <span id="stage-badge" class="bg-egyptRed/20 text-egyptRed border border-egyptRed/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                        المهمة الأولى
-                    </span>
-                    <h3 id="stage-title" class="text-2xl md:text-3xl font-black text-egyptGold mt-2">
-                        ساعة الصفر والضربة الجوية
-                    </h3>
-                </div>
-                <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-yellow-400 font-mono text-sm">
-                    <i class="fa-solid fa-clock"></i>
-                    <span>تاريخ المعركة: <strong id="stage-date" class="text-white">6 أكتوبر 1973 - 14:00</strong></span>
+            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 mb-6">
+                <h4 id="question-text" class="text-base md:text-lg font-bold text-white mb-4">سؤال رقم 1: ما هو الرمز التاريخي لعبور قناة السويس؟</h4>
+                
+                <!-- 4 Options Container -->
+                <div id="answers-container" class="grid grid-cols-1 gap-3">
+                    <button onclick="checkAnswer(0)" class="option-btn w-full p-3 bg-slate-700 hover:bg-egyptGold hover:text-black font-bold rounded-lg transition text-right text-sm">الخيار الأول</button>
+                    <button onclick="checkAnswer(1)" class="option-btn w-full p-3 bg-slate-700 hover:bg-egyptGold hover:text-black font-bold rounded-lg transition text-right text-sm">الخيار الثاني</button>
+                    <button onclick="checkAnswer(2)" class="option-btn w-full p-3 bg-slate-700 hover:bg-egyptGold hover:text-black font-bold rounded-lg transition text-right text-sm">الخيار الثالث</button>
+                    <button onclick="checkAnswer(3)" class="option-btn w-full p-3 bg-slate-700 hover:bg-egyptGold hover:text-black font-bold rounded-lg transition text-right text-sm">الخيار الرابع</button>
                 </div>
             </div>
+        </div>
 
-            <!-- Story Briefing Box -->
-            <div class="bg-slate-800/60 border-right-4 border-egyptGold p-4 rounded-r-lg rounded-l-xl mb-6 text-slate-300 leading-relaxed text-sm md:text-base flex gap-4 items-start">
-                <div class="p-3 bg-slate-700/80 rounded-xl text-egyptGold hidden sm:block">
-                    <i id="stage-icon" class="fa-solid fa-jet-fighter text-2xl"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-egyptGold"></i>
-                        التوجيه العملياتي:
-                    </h4>
-                    <p id="stage-description">
-                        صدرت الأوامر للنسور المصرية بشن ضربة جوية مركزة ضد المقرات القيادية والقواعد الجوية
+        <!-- SCREEN 2: VICTORY / CERTIFICATE -->
+        <div id="screen-victory" class="hidden w-full bg-slate-900/95 gold-border rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-slate-800 border-2 border-egyptGold rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl">
+                <i class="fa-solid fa-award text-3xl text-egyptGold"></i>
+            </div>
+            <h3 class="text-2xl font-black text-egyptGold mb-2">تهانينا يا بطل!</h3>
+            <p class="text-gray-300 text-sm mb-4">لقد اجتاز البطل <strong id="cert-name" class="text-white"></strong> مسابقة 6 أكتوبر بنجاح واقتدار.</p>
+            <div class="bg-slate-800 p-4 rounded-xl max-w-sm mx-auto mb-6 border border-slate-700">
+                <span class="text-xs text-gray-400 block">النتيجة النهائية:</span>
+                <span id="cert-score" class="text-2xl font-black text-egyptGold">100 / 100</span>
+            </div>
+            <button onclick="location.reload()" class="bg-egyptGold text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition">
+                <i class="fa-solid fa-rotate-right ml-2"></i> إعادة اللعب والتحدي
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3 text-xs text-gray-500 border-t border-slate-800">
+        جميع الحقوق محفوظة © 2026 - مديرية التربية والتعليم بالغربية | تطوير البطل: عبدالرحمن صابر
+    </footer>
+
+    <!-- JavaScript Game Logic -->
+    <script>
+        let playerName = "";
+        let currentStage = 0;
+        let score = 0;
+
+        const questions = [
+            {
+                title: "المرحلة الأولى: ساعة الصفر والضربة الجوية",
+                question: "لماذا تم اختيار الساعة 14:00 (الثانية ظهراً) تحديداً لبدء الهجوم والضربة الجوية الكبرى؟",
+                options: [
+                    "لأن الشمس تكون خلف ظهر الطيارين المصريين وفي أعين القوات الإسرائيلية لإرباكهم.",
+                    "بسبب انخفاض درجة الحرارة في سيناء في هذا التوقيت.",
+                    "لأن قناة السويس تكون جافة تماماً في الساعة الثانية ظهراً.",
+                    "لانتظار وصول إمدادات خارجية قبل الاقتحام."
+                ],
+                correct: 0
+            },
+            {
+                title: "المرحلة الثانية: تفتيت الساتر الترابي",
+                question: "ما هي الفكرة الهندسية العبقرية التي استخدمها أبطالنا لتدمير خط بارليف والساتر الترابي؟",
+                options: [
+                    "استخدام المتفجرات الثقيلة فقط.",
+                    "استخدام مضخات المياه ذات الضغط العالي لجرف الأتربة.",
+                    "انتظار جفاف القناة والعبور بالدبابات مباشرة.",
+                    "بناء جسور طائرة فوق الساتر الترابي."
+                ],
+                correct: 1
+            },
+            {
+                title: "المرحلة الثالثة: معركة الكباري وتثبيت رؤوس الكباري",
+                question: "كيف نجح أبطال المشاة والمدرعات المصرية في صد هجمات العدو المضادة؟",
+                options: [
+                    "بالتراجع للغرب وانتظار المدفعية فقط.",
+                    "باستخدام الصواريخ المضادة للدبابات والدفاع المستميت.",
+                    "بالاعتماد على الاستسلام وتأجيل المعركة.",
+                    "بإغراق المنطقة بالمياه الصناعية."
+                ],
+                correct: 1
+            }
+        ];
+
+        function startGame(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('player-name').value.trim();
+            if (!nameInput) return;
+
+            playerName = nameInput;
+            document.getElementById('player-display-name').innerText = playerName;
+            
+            document.getElementById('screen-cover').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            document.getElementById('header-stats').classList.remove('hidden');
+
+            loadStage(0);
+        }
+
+        function loadStage(index) {
+            currentStage = index;
+            if (index >= questions.length) {
+                showVictory();
+                return;
+            }
+
+            const q = questions[index];
+            document.getElementById('stage-title').innerText = q.title;
+            document.getElementById('question-text').innerText = q.question;
+            document.getElementById('stage-display').innerText = `${index + 1} / ${questions.length}`;
+
+            const buttons = document.querySelectorAll('.option-btn');
+            q.options.forEach((opt, idx) => {
+                buttons[idx].innerText = opt;
+                buttons[idx].className = "option-btn w-full p-3 bg-slate-700 hover:bg-egyptGold hover:text-black font-bold rounded-lg transition text-right text-sm";
+                buttons[idx].disabled = false;
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const q = questions[currentStage];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedIndex === q.correct) {
+                buttons[selectedIndex].className = "option-btn w-full p-3 bg-emerald-700 text-white font-bold rounded-lg text-right text-sm";
+                score += 35;
+                if(score > 100) score = 100;
+                document.getElementById('score-display').innerText = score;
+                
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+
+                setTimeout(() => {
+                    loadStage(currentStage + 1);
+                }, 1200);
+            } else {
+                buttons[selectedIndex].className = "option-btn w-full p-3 bg-red-700 text-white font-bold rounded-lg text-right text-sm";
+                buttons[q.correct].className = "option-btn w-full p-3 bg-emerald-700 text-white font-bold rounded-lg text-right text-sm";
+                
+                setTimeout(() => {
+                    loadStage(currentStage + 1);
+                }, 2000);
+            }
+        }
+
+        function showVictory() {
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-victory').classList.remove('hidden');
+            document.getElementById('cert-name').innerText = playerName;
+            document.getElementById('cert-score').innerText = `${score} / 100`;
+
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+        }
+    </script>
+</body>
+    </html>
